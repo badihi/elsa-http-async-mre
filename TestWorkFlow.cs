@@ -13,7 +13,6 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
     public class TestWorkFlow : IWorkflow
     {
         public void Build(IWorkflowBuilder builder) => builder
-            //.SignalReceived("Finalize")
             .StartWith<TestActivity>()
             .WriteLine("Hello World!");
     }
