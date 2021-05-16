@@ -34,6 +34,7 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
                     .AddQuartzTemporalActivities()
                     .AddWorkflowsFrom<Startup>()
                     .AddActivity<TestActivity>()
+                    .AddActivity<StartActivity>()
                     .AddWorkflow<TestWorkFlow>()
                 );
 

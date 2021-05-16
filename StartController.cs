@@ -1,4 +1,5 @@
-﻿using Elsa.Persistence;
+﻿using Elsa.Dispatch;
+using Elsa.Persistence;
 using Elsa.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,15 +15,15 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
         private readonly IWorkflowRegistry workflowRegistry;
         private readonly IWorkflowFactory workflowFactory;
         private readonly IWorkflowInstanceStore workflowInstanceStore;
-        private readonly IStartsWorkflow startsWorkflow;
+        private readonly IWorkflowInstanceDispatcher workflowInstanceDispatcher;
 
-        public StartController(IWorkflowRunner workflowInvoker, IWorkflowRegistry workflowRegistry, IWorkflowFactory workflowFactory, IWorkflowInstanceStore workflowInstanceStore, IStartsWorkflow startsWorkflow)
+        public StartController(IWorkflowRunner workflowInvoker, IWorkflowRegistry workflowRegistry, IWorkflowFactory workflowFactory, IWorkflowInstanceStore workflowInstanceStore, IWorkflowInstanceDispatcher workflowInstanceDispatcher)
         {
             this.workflowInvoker = workflowInvoker;
             this.workflowRegistry = workflowRegistry;
             this.workflowFactory = workflowFactory;
             this.workflowInstanceStore = workflowInstanceStore;
-            this.startsWorkflow = startsWorkflow;
+            this.workflowInstanceDispatcher = workflowInstanceDispatcher;
         }
 
         [Route("/start")]
@@ -31,7 +32,8 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
             var workflow = await workflowRegistry.FindAsync(f => f.Name == "TestWorkFlow");
             var instance = await workflowFactory.InstantiateAsync(workflow);
             await workflowInstanceStore.AddAsync(instance);
-            workflowInvoker.RunWorkflowAsync(workflow, instance).Wait();
+            await workflowInvoker.RunWorkflowAsync(workflow, instance);
+            await workflowInstanceDispatcher.DispatchAsync(new ExecuteWorkflowInstanceRequest(instance.Id, "activity-start"));
             return instance.Id;
         }
     }

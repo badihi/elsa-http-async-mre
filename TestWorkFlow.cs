@@ -13,9 +13,17 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
     public class TestWorkFlow : IWorkflow
     {
         public void Build(IWorkflowBuilder builder) => builder
-            //.SignalReceived("Finalize")
-            .StartWith<TestActivity>()
+            .StartWith<StartActivity>(c => c.ActivityId = "start")
+            .Then<TestActivity>(c => c.ActivityId = "test")
             .WriteLine("Hello World!");
+    }
+
+    public class StartActivity : Activity
+    {
+        protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
+        {
+            return Suspend();
+        }
     }
 
     public class TestActivity : Activity
