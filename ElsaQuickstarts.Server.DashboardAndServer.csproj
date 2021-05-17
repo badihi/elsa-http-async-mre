@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elsa" Version="2.0.0-rc2.73" />
+    <PackageReference Include="Elsa" Version="2.0.0-rc2.96" />
     <PackageReference Include="Elsa.Activities.Http" Version="2.0.0-rc2.73" />
     <PackageReference Include="Elsa.Activities.Temporal.Quartz" Version="2.0.0-rc2.73" />
     <PackageReference Include="Elsa.Designer.Components.Web" Version="2.0.0-rc2.73" />

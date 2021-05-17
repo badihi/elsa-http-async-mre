@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ElsaQuickstarts.Server.DashboardAndServer
 {
-    public class StartController : Controller
+    public class StartController// : Controller
     {
         private readonly IWorkflowRunner workflowInvoker;
         private readonly IWorkflowRegistry workflowRegistry;

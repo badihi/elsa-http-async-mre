@@ -13,7 +13,8 @@ namespace ElsaQuickstarts.Server.DashboardAndServer
     public class TestWorkFlow : IWorkflow
     {
         public void Build(IWorkflowBuilder builder) => builder
-            .StartWith<StartActivity>(c => c.ActivityId = "start")
+            .HttpEndpoint("/wf")
+            //.StartWith<StartActivity>(c => c.ActivityId = "start")
             .Then<TestActivity>(c => c.ActivityId = "test")
             .WriteLine("Hello World!");
     }
